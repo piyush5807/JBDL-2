@@ -1,4 +1,7 @@
+
+======================================
 Agenda for the next week (17 Feb to 23 Feb):
+==========================================
 Intro to Maven
 Intro to Spring / Spring Boot
 Creating a Web Services (Web App) using Spring Boot
@@ -36,9 +39,14 @@ https://linuxconfig.org/install-and-configure-mysql-workbench-on-ubuntu-linux
 https://www.youtube.com/watch?v=7S_tz1z_5bA (only first one hour will be sufficient)
 https://www.mysqltutorial.org/
 
+
+
 For Maven:
 https://www.youtube.com/watch?v=pt3uB0sd5kY
 https://maven.apache.org/install.html
 
 For JSON:
 https://www.youtube.com/watch?v=iiADhChRriM
+
+===============================================
+
