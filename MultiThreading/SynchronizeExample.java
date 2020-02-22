@@ -7,7 +7,6 @@ public class SynchronizeExample extends Thread{
         synchronized (this) {
             try {
                 this.sleep(1000);
-                System.out.println(x);
                 System.out.println(currentThread().getName());
 
             } catch (InterruptedException e) {
@@ -21,8 +20,10 @@ public class SynchronizeExample extends Thread{
         SynchronizeExample o1 = new SynchronizeExample();
         SynchronizeExample o2 = new SynchronizeExample();
 
-        o1.start();
-        o2.start();
+        for(int i=0;i<10;i++){
+            SynchronizeExample object = new SynchronizeExample();
+            object.start();
+        }
     }
 }
 
