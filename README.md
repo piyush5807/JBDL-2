@@ -49,4 +49,8 @@ For JSON:
 https://www.youtube.com/watch?v=iiADhChRriM
 
 ===============================================
+ The useful links I was using in Lecture 3:
+ https://api.github.com/search/users?q=shashi
+ https://developer.github.com/v3/
+ https://start.spring.io/
 
