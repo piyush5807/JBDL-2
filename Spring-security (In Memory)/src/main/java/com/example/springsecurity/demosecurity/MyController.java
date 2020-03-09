@@ -1,8 +1,11 @@
 package com.example.springsecurity.demosecurity;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.security.RolesAllowed;
 
 @RestController
 public class MyController {
@@ -18,7 +21,8 @@ public class MyController {
     }
 
 
-    @RequestMapping(value = "/user", method = RequestMethod.POST)
+    @Secured({"my_role2"})
+    @RequestMapping(value = "/user2", method = RequestMethod.GET)
     public String greetUserPost(){
         return "Hi Admin";
     }
@@ -27,4 +31,9 @@ public class MyController {
     public String greetAdmin(){
         return "Hi admin, ";
     }
+
+
+    // my_role1 -> user
+    // my_role2 -> admin
+
 }
