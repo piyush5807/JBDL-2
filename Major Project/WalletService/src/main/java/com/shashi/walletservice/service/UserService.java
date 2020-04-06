@@ -29,7 +29,7 @@ public class UserService {
 
     public User getAUser(int userId){
         ResponseEntity<User> forEntity =
-                restTemplate.getForEntity(String.format("http://127.0.0.1:9011/users/{%s}", userId), User.class);
+                restTemplate.getForEntity(String.format("http://127.0.0.1:9011/users/%s", userId), User.class);
         System.out.println(forEntity.getHeaders());
         if(forEntity.getStatusCode().equals(HttpStatus.NOT_FOUND)){
             return null;

@@ -82,7 +82,7 @@ public class Consumer {
             fw.flush();
             fw.close();
             System.out.println("CSV File is created successfully.");
-            EmailService.sendEmailWithAttachments("","",user1.getEmail(),"","","","",filename);
+            EmailService.sendEmailWithAttachments(user1.getEmail(),"Transaction detail","Please find your transaction details in the attachments.\n Have a Good Day!!!",filename);
         } catch (Exception e) {
             e.printStackTrace();
         }

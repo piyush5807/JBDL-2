@@ -20,7 +20,7 @@ public class WalletDaoRedis {
     public Boolean updateWallet(WalletInRedis wallet) {
         try {
             Map userHash = new ObjectMapper().convertValue(wallet, Map.class);
-            redisTemplate.opsForHash().put(KEY, wallet.getUid(), userHash);
+            redisTemplate.opsForHash().put(KEY, String.valueOf( wallet.getUid()), userHash);
             return true;
 
         } catch (Exception e) {

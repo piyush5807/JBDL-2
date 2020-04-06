@@ -3,6 +3,8 @@ import com.shashi.walletservice.Util.EmailUtil;
 
 import java.util.Properties;
 
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
@@ -18,6 +20,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.io.IOException;
 import javax.mail.internet.AddressException;
+import javax.activation.DataSource;
 
 public class EmailService {
      public static void sendEmail(String toEmail){
@@ -46,60 +49,63 @@ public class EmailService {
         EmailUtil.sendEmail(session, toEmail,"Mail from e_wallet", "Transaction");
     }
 
-    public static void sendEmailWithAttachments(String host, String port,
-                                                final String userName, final String password, String toAddress,
-                                                String subject, String message, String attachFiles)
-            throws AddressException, MessagingException {
-        // sets SMTP server properties
-        Properties properties = new Properties();
-        properties.put("mail.smtp.host", host);
-        properties.put("mail.smtp.port", port);
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.user", userName);
-        properties.put("mail.password", password);
+    public static void sendEmailWithAttachments( String toAddress,
+                                                 String subject, String message, String attachFiles)
+    {
+        final String userName = ""; //requires valid gmail id
+        final String password = ""; // correct password for gmail id
 
-        // creates a new session with an authenticator
+        System.out.println("SSLEmail Start");
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com"); //SMTP Host
+        props.put("mail.smtp.socketFactory.port", "465"); //SSL Port
+        props.put("mail.smtp.socketFactory.class",
+                "javax.net.ssl.SSLSocketFactory"); //SSL Factory Class
+        props.put("mail.smtp.auth", "true"); //Enabling SMTP Authentication
+        props.put("mail.smtp.port", "465"); //SMTP Port
+
         Authenticator auth = new Authenticator() {
-            public PasswordAuthentication getPasswordAuthentication() {
+            //override the getPasswordAuthentication method
+            protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(userName, password);
             }
         };
-        Session session = Session.getInstance(properties, auth);
 
-        // creates a new e-mail message
-        Message msg = new MimeMessage(session);
+        Session session = Session.getDefaultInstance(props, auth);
+        System.out.println("Session created");
+        try {
+            // creates a new e-mail message
+            MimeMessage msg = new MimeMessage(session);
 
-        msg.setFrom(new InternetAddress(userName));
-        InternetAddress[] toAddresses = { new InternetAddress(toAddress) };
-        msg.setRecipients(Message.RecipientType.TO, toAddresses);
-        msg.setSubject(subject);
-        msg.setSentDate(new Date());
+            msg.setFrom(new InternetAddress(userName));
+            InternetAddress toAddresses =  new InternetAddress(toAddress) ;
+            msg.addRecipient(Message.RecipientType.TO, toAddresses);
+            msg.setSubject(subject);
+            msg.setSentDate(new Date());
 
-        // creates message part
-        MimeBodyPart messageBodyPart = new MimeBodyPart();
-        messageBodyPart.setContent(message, "text/html");
+            // creates message part
+            MimeBodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setText(message);
 
-        // creates multi-part
-        Multipart multipart = new MimeMultipart();
-        multipart.addBodyPart(messageBodyPart);
+            MimeBodyPart messageBodyPart1 = new MimeBodyPart();
+            DataSource source = (DataSource) new FileDataSource(attachFiles);
+            messageBodyPart1.setDataHandler(new DataHandler(source));
+            messageBodyPart1.attachFile(attachFiles);
 
-        // adds attachments
-        String filePath = attachFiles;
+            // creates multi-part
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(messageBodyPart);
+            multipart.addBodyPart(messageBodyPart1);
 
-                MimeBodyPart attachPart = new MimeBodyPart();
+            msg.setContent(multipart);
 
-                try {
-                    attachPart.attachFile(filePath);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-
-                multipart.addBodyPart(attachPart);
-
-        // sets the multi-part as e-mail's content
-        msg.setContent(multipart);
-        // sends the e-mail
-        Transport.send(msg);
+            Transport.send(msg);
+            System.out.println("Message sent");
+        }
+        catch(Exception e)
+        {
+            System.out.println("Problem sending email");
+            e.printStackTrace();
+        }
     }
 }
