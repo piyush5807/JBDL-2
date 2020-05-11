@@ -3,6 +3,7 @@ package com.example.jpaexample.demojpaexample;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "myBook")
 public class Book {
 
     @Id

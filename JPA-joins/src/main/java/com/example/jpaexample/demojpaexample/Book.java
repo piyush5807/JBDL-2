@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class Book {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "b_name")
@@ -75,7 +75,6 @@ public class Book {
     }
 
     public Book(){
-
     }
 
     @Override
