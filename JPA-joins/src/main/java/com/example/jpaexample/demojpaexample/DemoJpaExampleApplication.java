@@ -26,18 +26,18 @@ public class DemoJpaExampleApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-//		Set<Book> books = new HashSet<>();
+		Set<Book> books = new HashSet<>();
 //		books.add(new Book("Intro to HTML", "A", 30));
 //		books.add(new Book("Intro to CSS", "D", 45));
 //		books.add(new Book("Intro to Django", "B", 100));
 //		bookCategoryRepository.save(new BookCategory("Non Programming Lang", books));
+//
+//		bookCategoryRepository.deleteById(1);
 ////
 //		bookCategoryRepository.save(new BookCategory("Prog Lang"));
 
-		bookRepository.save(new Book("gfvjbesd", "A", 300, 5));
-		bookRepository.save(new Book("hdvegv", "B", 300, 1));
-
-
+//		bookRepository.save(new Book("gfvjbesd", "A", 300, 5));
+		bookRepository.save(new Book("hdvegv", "B", 300, 3));
 
 	}
 }

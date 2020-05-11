@@ -1,6 +1,5 @@
 package com.example.demojdbc.jdbcdemo;
 
-import jdk.nashorn.internal.runtime.arrays.ArrayLikeIterator;
 
 import java.sql.*;
 import java.util.ArrayList;

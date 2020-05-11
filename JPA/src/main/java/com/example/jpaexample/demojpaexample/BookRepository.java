@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, Integer> {
 
-    @Query(value = "SELECT * FROM Book b WHERE b.a_name = :authorname", nativeQuery = true)
+    @Query
     List<Book> findByAuthorName(String authorname);
 }
